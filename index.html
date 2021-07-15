@@ -4,15 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Code Quiz</title>
+    <title>Code Quiz</title>	
     <link rel="stylesheet" href="./assets/css/style.css" />
+	
   </head>
   <body>
     <div class="wrapper">
       <header>
-        <h1>Code Quiz</h1>
+	  <center>
+		
+		<div id="header">
+        <h1>Coding  Quiz Challenge</h1>		
+		<h2>
+			Try to answer the following code-related questions within the time limit. <br>
+			Keep in mind that incorrect answers will penalize your score/time<br>
+			by ten seconds!
+		</h2>
+		
+		<input type="button" value="Start Quiz" onclick="javascript:btnStartQuiz_Click();" id="btnStartQuiz"/>
+		</div>
+		<div id="questionArea" style="display:none;" >
+		<div>
+			Time: <div id="countdown">40</div>
+		</div>
+		<div id="questions" class="class">				
+		</div>
+		<div id="result" style="display:none;">										
+		</div>
+		</div>
+		<div id="initials" style="display:none"; >
+		</div>
+		<div id="scoreList" style="display:none" >
+		</div>
+	  </center>
       </header>
+	  
 
-    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/script.js"></script>	
   </body>
 </html>
