@@ -5,39 +5,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Code Quiz</title>	
-    <link rel="stylesheet" href="./assets/css/style.css" />
-	
+    <link rel="stylesheet" href="assets/css/style.css" />
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-	  <center>
-		
-		<div id="header">
-        <h1>Coding  Quiz Challenge</h1>		
-		<h2>
-			Try to answer the following code-related questions within the time limit. <br>
-			Keep in mind that incorrect answers will penalize your score/time<br>
-			by ten seconds!
-		</h2>
-		
-		<input type="button" value="Start Quiz" onclick="javascript:btnStartQuiz_Click();" id="btnStartQuiz"/>
+   <div class="container-fluid">
+		<div class="row">
+			<div class="container">
+				<div  id="header">
+					<div class="row mt-5">
+						<div class="col-7">&nbsp;</div>
+						<div class="col-5">
+							<div class="float-right twenty">&nbsp;</div>
+						</div>
+					</div>
+					<div  id="header" class="row mt-5">
+						<div class="col-lg-8 col-md-8 col-12 m-auto">
+							<div class="row text-center">
+								<div class="col-12">
+									<h1><strong>Coding Quiz Challenge</strong></h1>
+								</div>
+								<div class="col-12 mt-5">
+									<p class="twentyfour">Try to answer the following code-related questions within the time limit of 60 seconds. Keep in mind that incorrect answers will penalize your score by reducing your time by ten seconds!</p>
+									<button type="submit" onclick="javascript:btnStartQuiz_Click();" id="btnStartQuiz" class="btn btn-primary submit_btn mt-3">Start Quiz</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+			
+				<div id="questionArea" style="display:none";>
+					
+					<div class="row mt-5">
+						<div class="col-7"><button type="submit" class="btn btn-primary submit_btn" id="viewHighScore" onclick="javascript:viewHighScores(false);">View high scores</button>
+						</div>
+							<div class="col-5">
+								<div class="float-right twenty">Time: <div id="countdown">60</div></div>
+							</div>
+					</div>
+					
+					<div class="row mt-5">		
+					<div class="col-lg-8 col-md-8 col-12 m-auto">
+						<div id="questions">				
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div id="result" style="display:none"; class="ans"><em>Wrong!</em></div>
+							</div>	
+						</div>					
+					</div>	
+				</div>
+			</div>	
+				
+				<div id="initials" style="display:none"; >
+					<div class="row mt-5">
+						<div class="col-7">&nbsp;</div>
+						<div class="col-5">
+							<div class="float-right twenty">&nbsp;</div>
+						</div>
+					</div>
+					<div class="row mt-5">
+						<div class="col-lg-8 col-md-8 col-12 m-auto">
+							<div class="row">
+								<div class="col-12">
+									<h1><strong>All done!</strong></h1>
+								</div>
+								<div class="col-12 mt-5">
+									<span class="twentyfour">Your final score is <label id="finalScore"></label>.</span>
+									 <div class="form-inline inline-to-block mt-3">
+									  <div class="form-group">
+										<label for="initialsID" class="twentyfour">Enter initials:</label>
+										<input type="text" id="initialsID" class="form-control mx-sm-3 submit_field_width">
+										<button type="submit" class="btn btn-primary submit_btn" id="viewHighScore" onclick="javascript:viewHighScores(true);">Submit</button>
+									  </div>
+									</div>
+								</div>									
+							</div>
+						</div>	
+					</div>	
+				</div>
+				<div id="scoreList" style="display:none" >
+					<div class="row mt-5">
+						<div class="col-7">&nbsp;</div>
+						<div class="col-5">
+							<div class="float-right twenty">&nbsp;</div>
+						</div>
+					</div>
+					<div class="row mt-5">
+						<div class="col-lg-8 col-md-8 col-12 m-auto">
+							<div class="row">
+							<div class="col-12">
+								<h1><strong>High scores</strong></h1>
+							</div>
+							<div class="col-12 mt-5">
+								<div id="scores">									
+								</div>
+								<button type="submit" class="btn btn-primary submit_btn mt-2" id="goBack" onclick="goBack_Click();">Go back</button>&nbsp;&nbsp;
+								<button type="submit" class="btn btn-primary submit_btn mt-2" id="clearScore" onclick="clearHighScore_Click();" >Clear high scores</button>
+							</div>
+							</div>                    
+						</div>	
+					</div>	
+				</div>
+			</div>
 		</div>
-		<div id="questionArea" style="display:none;" >
-		<div>
-			Time: <div id="countdown">40</div>
-		</div>
-		<div id="questions" class="class">				
-		</div>
-		<div id="result" style="display:none;">										
-		</div>
-		</div>
-		<div id="initials" style="display:none"; >
-		</div>
-		<div id="scoreList" style="display:none" >
-		</div>
-	  </center>
-      </header>
+	</div>
 	  
 
     <script src="./assets/js/script.js"></script>	

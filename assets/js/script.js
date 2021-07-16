@@ -3,45 +3,46 @@ var arrayOfAnswers = ["A","B","C", "D"];
 
 var stopTimer = false;
 var seconds = 0;
+var correntAnswers = 0;
 
 var questions = [
   {
       question: "Commonly used data types DO Not Include:",
 	  possibleAnswers : [
-		"A. strings",
-		"B. booleans",
-		"C. alerts",
-		"D. numbers"
+		"A. Strings",
+		"B. Booleans",
+		"C. Alerts",
+		"D. Numbers"
 	  ],	  
       answer: "C"
     },
     {
-      question: "The condition in an if / else statement is encloed with ________.",
+      question: "The condition in an if / else statement is enclosed with ________.",
 	  possibleAnswers : [
-		"A. quotes",
-		"B. curly brackets",
-		"C. parantheses",
-		"D. square brackets"
+		"A. Quotes",
+		"B. Curly brackets",
+		"C. Parentheses",
+		"D. Square brackets"
 	  ],	  
       answer: "C"
     },
     {
-      question: "Array in JavaScript can be used to store ________.",
+      question: "An Array in JavaScript can be used to store ________.",
 	  possibleAnswers : [
-		"A. numbers and strings",
-		"B. other arrays",
-		"C. booleans",
-		"D. all the above"
+		"A. Numbers and strings",
+		"B. Other arrays",
+		"C. Booleans",
+		"D. All of the above"
 	  ],	  
       answer: "A"
     },
     {
       question: "String values must be enclosed within ________ when being assigned to variables.",
 	  possibleAnswers : [
-		"A. commas",
-		"B. curly brackets",
-		"C. quotes",
-		"D. parenthesis"
+		"A. Commas",
+		"B. Curly brackets",
+		"C. Quotes",
+		"D. Parentheses"
 	  ],	  
       answer: "C"
     }    
@@ -73,7 +74,16 @@ var questions = [
 	
 	function btnStartQuiz_Click(){				
 		document.getElementById("header").style.display = "none";		
+		document.getElementById("initials").style.display = "none";		
+		document.getElementById("scoreList").style.display = "none";	
+		document.getElementById("scores").style.display = "none";
+		document.getElementById("result").style.display = "none";
+		
 		document.getElementById("questionArea").style.display = "block";
+		document.getElementById("questions").style.display = "block";
+		document.getElementById("countdown").innerText = "60";
+		stopTimer = false;
+		correntAnswers = 0;
 		startAlerts();
 		setTimeout(displayQuestion(0,null), 10000);			
 	}
@@ -84,19 +94,20 @@ var questions = [
 	
 	function displayQuestion(questionNo, answerChooseIndex)
 	{		
-	
+	 
 			if(parseInt(document.getElementById("countdown").innerText) > 0 && stopTimer == false){
 				var questionNo1 = questions[questionNo];
 				var possibleAnswers = questionNo1.possibleAnswers;
-				var buttonHtml = "";
+				var buttonHtml = "<div class='col-12 mt-5'>";
 				
 				for(var i = 0; i< possibleAnswers.length ;i++)
 				{
-					buttonHtml += "<input id='btnQuestion-id_"+questionNo.toString()+"-answer_"+i.toString()+"' type='button' value='" + possibleAnswers[i] + "' onclick='answerClick(this)' /> <br/>";
+					buttonHtml += "<button id='btnQuestion-id_"+questionNo.toString()+"-answer_"+i.toString()+"' type='button' class='btn btn-primary btn-lg custom_btn' onclick='answerClick(this)'>" + possibleAnswers[i] +"</button><br/>";
 				}
+				
+				buttonHtml += "</div>";
 				 
-				var questionHtml = "<div class='questionHTML'>" + 
-				"<h2>" + questionNo1.question + "</h2>" + 
+				var questionHtml = "<div class='row'> <div class='col-12'> <h1><strong>" + questionNo1.question + "</strong></h1></div>" + 
 				buttonHtml + " </div>";
 				
 				document.getElementById("questions").innerHTML = questionHtml;				
@@ -108,45 +119,45 @@ var questions = [
 	
 	async function answerClick(button){						
 			
-	if(parseInt(document.getElementById("countdown").innerText) > 0 && stopTimer == false){
-	
-		var questionNo = button.id.substring(button.id.indexOf("_") + 1,button.id.lastIndexOf('-'));
-		var userSelectedAnswerIndex = button.id.substring(button.id.lastIndexOf("_") + 1,button.id.length);					
-		
-		
-		if(parseInt(questionNo) + 1 == questions.length){
+			if(parseInt(document.getElementById("countdown").innerText) > 0 && stopTimer == false){
 			
-			displayResult(questionNo, userSelectedAnswerIndex, false);
-			
-			document.getElementById("questions").style.display = "none";
+				var questionNo = button.id.substring(button.id.indexOf("_") + 1,button.id.lastIndexOf('-'));
+				var userSelectedAnswerIndex = button.id.substring(button.id.lastIndexOf("_") + 1,button.id.length);					
 				
-			gotoScorePage();
+				
+				if(parseInt(questionNo) + 1 == questions.length){
+					
+					displayResult(questionNo, userSelectedAnswerIndex, false);
+					
+					document.getElementById("questions").style.display = "none";
+						
+					gotoScorePage();
+					
+					stopTimer = true;
+				}
+				else{					
+					displayResult(questionNo, userSelectedAnswerIndex, true); 
+				}
+			}
+			else{
+				gotoScorePage();
+			}
 			
-			stopTimer = true;
-		}
-		else{					
-			displayResult(questionNo, userSelectedAnswerIndex, true); 
-		}
-	}
-	else{
-		gotoScorePage();
-	}
-			
-		}		
+	}		
 		
 	function displayResult(questionNo, userSelectedAnswerIndex, gotoNextPage){
 		
 		var resultHTML = "";
 				
-		 var question = questions[questionNo];				 
-		 resultHTML += "<hr/> <br/> "; 
+		 var question = questions[questionNo];		
 		
 		if( isCorrectAnswer(parseInt(userSelectedAnswerIndex), question.answer))
 		{
-			resultHTML += "Correct";
+			resultHTML += "<em>Correct</em>";
+			correntAnswers +=1;
 		} 
 		else{
-			 resultHTML += "Incorrect answer"; 
+			 resultHTML += "<em>Incorrect answer</em>"; 
 			decrementInAlerts();
 		}						
 			
@@ -166,35 +177,41 @@ var questions = [
 	
 		
 		document.getElementById("initials").style.display = "block";
+		document.getElementById("initialsID").value = "";
 		document.getElementById("questionArea").style.display = "none";
-		
-		
-		var buildScoreHtml = " All done!<br/> Your final score is " + document.getElementById("countdown").innerText + ". <br/>";
-		
-		buildScoreHtml += "Enter initials: <input type='text' id='initialsID' /> &nbsp; <input type='button' value='Submit' onclick='viewHighScores();'/>";
-		
-		
-		document.getElementById("initials").innerHTML = buildScoreHtml;
+		document.getElementById("scoreList").style.display = "none";
+		document.getElementById("scores").style.display = "none";
+		document.getElementById("finalScore").innerHTML = correntAnswers;
 	}
 	
-	function viewHighScores(){		
-
+	function viewHighScores(isFromInitials){			
 		
+		document.getElementById("header").style.display = "none";		
+		document.getElementById("initials").style.display = "none";		
+		document.getElementById("scoreList").style.display = "none";	
+		document.getElementById("scores").style.display = "none";
+		document.getElementById("questionArea").style.display = "none";
+		document.getElementById("questions").style.display = "none";
+				
 		var oldItems = JSON.parse(localStorage.getItem('score')) || [];		
 		
 		var score = {};					
 		
-		score.initials =  document.getElementById("initialsID").value;
-		score.score =  document.getElementById("countdown").innerText;	
-
-		oldItems.push(score);		
+		if(isFromInitials){
 		
-		localStorage.setItem("score", JSON.stringify(oldItems));
+			score.initials =  document.getElementById("initialsID").value;
+			score.score =  correntAnswers;	
+
+			oldItems.push(score);		
+			
+			localStorage.setItem("score", JSON.stringify(oldItems));
+		}
 		
 		document.getElementById("initials").style.display = "none";
 		document.getElementById("scoreList").style.display = "block";
+		document.getElementById("scores").style.display = "block";
 		
-		var highScoreHtml = "<h1>High scores:</h1>";				
+		var highScoreHtml = "";				
 		
 		var scores = JSON.parse(localStorage.getItem("score"));
 		var i = scores.length;
@@ -202,9 +219,38 @@ var questions = [
 		while(i--){
 			score = scores[i];
 			if(score != null){
-				highScoreHtml += "<input type='label' value='" + (i + 1).toString() + ". " + score.initials + " - " + score.score  + "' > <br/>";
+				highScoreHtml += "<input class='sccore_label' type='label' value='" + (i + 1).toString() + ". " + score.initials + " - " + score.score  + "' > <br/>";
 			}
 		}		
 		
-		document.getElementById("scoreList").innerHTML = highScoreHtml;
+		document.getElementById("scores").innerHTML = highScoreHtml;
+		
 	}
+	
+	function goBack_Click(){
+		document.getElementById("header").style.display = "block";
+		
+		document.getElementById("scoreList").style.display = "none";		
+		document.getElementById("initials").style.display = "none";
+		document.getElementById("initialsID").value = "";
+		document.getElementById("questionArea").style.display = "none";
+		document.getElementById("scoreList").style.display = "none";
+		document.getElementById("scores").style.display = "none";
+		
+	}
+	
+	function clearHighScore_Click(){
+		localStorage.removeItem("score");
+		localStorage.clear();
+		
+		document.getElementById("header").style.display = "block";
+		
+		document.getElementById("scoreList").style.display = "none";		
+		document.getElementById("initials").style.display = "none";
+		document.getElementById("initialsID").value = "";
+		document.getElementById("questionArea").style.display = "none";
+		document.getElementById("scoreList").style.display = "none";
+		document.getElementById("scores").style.display = "none";
+	}
+	
+	
